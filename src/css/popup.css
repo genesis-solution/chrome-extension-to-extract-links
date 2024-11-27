@@ -1,0 +1,16 @@
+/* CSS for popup.html */
+
+body {
+    min-width: 340px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    text-align: center;
+}
+
+.dropdown-menu {
+    max-width: 100vw;
+    white-space: normal;
+    overflow: hidden;
+}

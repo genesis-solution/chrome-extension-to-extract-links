@@ -1,0 +1,10 @@
+/* CSS for options.html */
+
+body {
+    min-width: 340px;
+}
+
+#toast-container {
+    max-width: 320px;
+    width: 100%;
+}

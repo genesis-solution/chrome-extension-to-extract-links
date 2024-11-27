@@ -1,0 +1,22 @@
+/* CSS for links.html */
+
+a:visited {
+    color: #bf40bf;
+}
+
+#floating-links {
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 160px;
+    z-index: 10;
+}
+
+#toast-container {
+    max-width: 260px;
+    width: 100%;
+}
+
+td.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

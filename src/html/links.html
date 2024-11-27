@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Link Extractor</title>
+    <link rel="icon" href="../images/logo16.png" sizes="any">
+    <link rel="stylesheet" type="text/css" href="../dist/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../dist/fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../dist/datatables/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="../dist/datatables/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <link rel="stylesheet" type="text/css" href="../css/links.css">
+    <script type="text/javascript" src="../js/theme.js"></script>
+</head>
+<body>
+
+<div id="floating-links" class="position-fixed top-0 end-0 mt-1 me-2 user-select-none">
+    <div class="row g-1 links d-none">
+        <div class="col">
+            <a href="#links"><span class="badge text-bg-success w-100">Links</span></a>
+        </div>
+        <div class="col">
+            <a href="#" class="copy-links">
+                <span class="badge text-bg-success w-100">Copy</span></a>
+        </div>
+    </div>
+    <div class="row g-1 domains d-none">
+        <div class="col">
+            <a href="#domains"><span class="badge text-bg-primary w-100">Domains</span></a>
+        </div>
+        <div class="col">
+            <a href="#" class="clip" data-clipboard-target="#domains-body" data-toast="Copied Domains">
+                <span class="badge text-bg-primary w-100">Copy</span></a>
+        </div>
+    </div>
+</div> <!-- floating-links -->
+
+<div class="container-fluid p-3">
+    <h2 id="loading-message" class="user-select-none d-none">Loading...</h2>
+    <div class="links d-none">
+        <div class="user-select-none">
+            <h2 id="links">Links <span class="badge bg-success-subtle"><span id="links-count">0</span>/<span id="links-total"></span></span></h2>
+            <div class="mb-1">
+            <button id="copy-links" class="btn btn-sm btn-success mb-1 me-1 copy-links" type="button">
+                Copy Links <i class="fa-solid fa-copy ms-1"></i></button>
+            <button id="down-links" class="btn btn-sm btn-outline-info download-file mb-1 me-1" type="button" data-target="#links-body" data-filename="links.txt">
+                Download <i class="fa-solid fa-download ms-1"></i></button>
+            <button id="open-links" class="btn btn-sm btn-outline-warning open-in-tabs position-relative mb-1 me-2" type="button" data-target="#links-body">
+                Open <i class="fa-solid fa-up-right-from-square ms-1"></i></button>
+            </div>
+            <div class="row keyboard">
+                <div class="col-12 col-sm-6">
+                    <kbd>C</kbd> <i class="fa-regular fa-keyboard"></i> <kbd>L</kbd> to Copy Links.
+                </div>
+                <div class="col-12 col-sm-6 text-sm-end">
+                    <kbd>K</kbd> <i class="fa-regular fa-keyboard"></i> <kbd>Z</kbd> Keyboard Shortcuts.
+                </div>
+            </div>
+        </div> <!-- links-buttons -->
+        <div class="table-wrapper">
+            <table id="links-table" class="table table-sm table-striped table-hover small w-100" data-counter="links-count">
+                <thead class="">
+                    <tr>
+                        <th>Link</th>
+                        <th>Text</th>
+                        <th>Title</th>
+                        <th>Label</th>
+                        <th>Rel</th>
+                        <th>Target</th>
+                    </tr>
+                </thead>
+                <tbody id="links-body"></tbody>
+            </table> <!-- links-table -->
+        </div> <!-- table-wrapper -->
+    </div> <!-- links -->
+
+    <div class="domains pt-2 d-none">
+        <div class="user-select-none">
+            <h2 id="domains">Domains <span class="badge bg-primary-subtle"><span id="domains-count">0</span>/<span id="domains-total"></span></span></h2>
+
+            <button id="copy-domains" class="btn btn-sm btn-primary clip mb-1 me-1" type="button" data-clipboard-target="#domains-body" data-toast="Copied Domains">
+                Copy Domains <i class="fa-solid fa-copy ms-1"></i></button>
+            <button id="down-domains" class="btn btn-sm btn-outline-info download-file mb-1 me-1" type="button" data-target="#domains-body" data-filename="domains.txt">
+                Download <i class="fa-solid fa-download ms-1"></i></button>
+            <button id="open-domains" class="btn btn-sm btn-outline-warning open-in-tabs position-relative mb-1 me-2" type="button" data-target="#domains-body">
+                Open <i class="fa-solid fa-up-right-from-square ms-1"></i></button>
+
+            <span class="d-inline-block me-1 keyboard">
+                <kbd>D</kbd> <i class="fa-regular fa-keyboard"></i> <kbd>M</kbd> to Copy Domains.</span>
+        </div> <!-- domains-buttons -->
+        <div class="table-wrapper">
+            <table id="domains-table" class="table table-sm table-striped table-hover small w-100" data-counter="domains-count">
+                <thead class=""><tr><th>Domain</th></tr></thead>
+                <tbody id="domains-body"></tbody>
+            </table> <!-- domains-table -->
+        </div> <!-- table-wrapper -->
+    </div> <!-- domains -->
+</div> <!-- container-fluid -->
+
+<div id="keybinds-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Keyboard Shortcuts <i class="fa-regular fa-keyboard ms-2"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <p><kbd>C</kbd> or <kbd>L</kbd> Copy All Links</p>
+                        <p><kbd>D</kbd> or <kbd>M</kbd> Copy All Domains</p>
+                        <p><kbd>F</kbd> or <kbd>J</kbd> Focus Links Filter</p>
+                        <p><kbd>G</kbd> or <kbd>H</kbd> Focus Domains Filter</p>
+                        <p><kbd>T</kbd> or <kbd>O</kbd> Open Options</p>
+                        <p><kbd>Z</kbd> or <kbd>K</kbd> Keyboard Shortcuts</p>
+                        <p><kbd class="me-1">Escape</kbd> Unfocus Filter Input</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- keybinds-modal -->
+
+<div aria-live="polite" aria-atomic="true" class="">
+    <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+</div> <!-- toast-container -->
+
+<div class="d-none">
+    <div class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+        <div class="toast-body"></div>
+    </div>
+</div> <!-- d-none -->
+
+<button type="button" class="btn btn-outline-primary" id="back-to-top">
+    <i class="fa-regular fa-square-caret-up"></i>
+</button> <!-- back-to-top -->
+
+<script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="../dist/datatables/dataTables.min.js"></script>
+<script type="text/javascript" src="../dist/datatables/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" src="../dist/datatables/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="../dist/datatables/buttons.bootstrap5.min.js"></script>
+<script type="text/javascript" src="../dist/datatables/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../dist/datatables/buttons.html5.min.js"></script>
+<script type="text/javascript" src="../dist/clipboard/clipboard.min.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+<script type="module" src="../js/links.js"></script>
+
+</body>
+</html>
